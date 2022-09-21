@@ -1,0 +1,64 @@
+﻿<Page
+    x:Class="SampleControlsApp.BlankPage1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:SampleControlsApp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+    <Grid
+        Margin="500,600,0,0"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            x:Name="TSHeader"
+            Margin="0,0,0,10"
+            FontSize="14"
+            FontWeight="SemiBold"
+            Text="HeaderText" />
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button
+                x:Name="TSButton"
+                Width="100"
+                Height="40"
+                HorizontalContentAlignment="Left"
+                Background="Aqua"
+                CornerRadius="20">
+                <Button.Content>
+
+                    <Grid>
+                        <ProgressRing
+                            Name="TSProgressRing"
+                            Width="25"
+                            Height="25"
+                            IsActive="False" />
+
+                        <Ellipse
+                            Name="TSKnob"
+                            Width="20"
+                            Height="20"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Fill="White" />
+
+                    </Grid>
+                </Button.Content>
+
+            </Button>
+            <TextBlock
+                x:Name="TSMode"
+                Margin="10,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="14"
+                FontWeight="SemiBold"
+                Text="Mode" />
+        </StackPanel>
+    </Grid>
+
+</Page>
