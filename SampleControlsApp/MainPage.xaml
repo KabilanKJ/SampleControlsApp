@@ -459,16 +459,15 @@
         </Style>
     </Page.Resources>
 
-    <Grid>
+    <Grid Background="Maroon">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
 
-
         <ProgressRing
-            MinHeight="10"
-            MaxHeight="10"
+            Width="10"
+            Height="10"
             Margin="100"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
@@ -476,7 +475,12 @@
             Foreground="AliceBlue"
             IsActive="True" />
 
-
+        <ToggleSwitch
+            Margin="10,20"
+            VerticalAlignment="Top"
+            Background="White"
+            Header="My Toggle Switch"
+            IsOn="True" />
 
         <StackPanel
             HorizontalAlignment="Center"
@@ -541,20 +545,19 @@
             Margin="20"
             Background="LightGray">
 
-            <local:ZBMSToggleButton
+            <local:ZToggleSwitch
                 x:Name="SampleButton"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Background="Aqua"
-                HeaderFontSize="14"
-                HeaderText="Sample"
-                IsLoadingEnabled="False"
+                Background="White"
+                HeaderFontSize="20"
+                IsLoadingEnabled="True"
                 IsOn="True"
                 LoadingContent="Waiting"
-                OffContent="Bored"
+                OffContent="Bored "
                 OnContent="Happy"
-                OnOffFontSize="12"
-                OnStateBackground="Pink"
+                OnOffFontSize="16"
+                OnStateBackground="ForestGreen"
                 Toggled="SampleButton_Toggled" />
 
             <Button
@@ -565,6 +568,7 @@
                 VerticalAlignment="Center"
                 Click="Verify_Click"
                 Content="Verify" />
+
 
         </Grid>
 

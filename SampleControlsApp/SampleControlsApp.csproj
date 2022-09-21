@@ -127,7 +127,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleToggleSwitch.cs" />
-    <Compile Include="ZBMSToggleButton.cs" />
+    <Compile Include="ZToggleSwitch.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

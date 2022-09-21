@@ -4,54 +4,19 @@
     xmlns:local="using:SampleControlsApp">
 
 
-    <ResourceDictionary.ThemeDictionaries>
-
-        <ResourceDictionary x:Key="Light">
-
-            <SolidColorBrush x:Key="ZToggleSwitchKnobFillOff" Color="Black" />
-            <SolidColorBrush x:Key="ZToggleSwitchKnobFillOn" Color="White" />
-            <SolidColorBrush x:Key="ZToggleSwitchKnobFillPressed" Color="White" />
-
-            <SolidColorBrush
-                x:Key="ZToggleSwitchPressedBackground"
-                Opacity="5"
-                Color="Gray" />
-            <SolidColorBrush x:Key="ZToggleSwitchOffBackground" Color="White" />
-            <SolidColorBrush x:Key="ZToggleSwitchOffBorderBrush" Color="Black" />
-
-        </ResourceDictionary>
-
-        <ResourceDictionary x:Key="Dark">
-
-            <SolidColorBrush x:Key="ZToggleSwitchKnobFillOff" Color="White" />
-            <SolidColorBrush x:Key="ZToggleSwitchKnobFillOn" Color="Black" />
-            <SolidColorBrush x:Key="ZToggleSwitchKnobFillPressed" Color="White" />
-
-            <SolidColorBrush x:Key="ZToggleSwitchPressedBackground" Color="Gray" />
-            <SolidColorBrush x:Key="ZToggleSwitchOffBackground" Color="Black" />
-            <SolidColorBrush x:Key="ZToggleSwitchOffBorderBrush" Color="White" />
-
-        </ResourceDictionary>
-
-
-
-    </ResourceDictionary.ThemeDictionaries>
-
-    <SolidColorBrush x:Key="StateBackground" Color="Aqua" />
-    <SolidColorBrush x:Key="ZToggleSwitchKnobFillOn" Color="White" />
-
-    <Style TargetType="local:ZBMSToggleButton">
-
+    <Style TargetType="local:ZToggleSwitch">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:ZBMSToggleButton">
-
-                    <Grid VerticalAlignment="Top" Background="{TemplateBinding Background}">
+                <ControlTemplate TargetType="local:ZToggleSwitch">
+                    <Grid
+                        x:Name="RootGrid"
+                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                        Background="{TemplateBinding Background}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-
                         <Grid.Resources>
                             <Style x:Key="ButtonStyle" TargetType="Button">
                                 <Setter Property="Template">
@@ -59,7 +24,6 @@
                                         <ControlTemplate TargetType="Button">
                                             <ContentPresenter
                                                 x:Name="ContentPresenter"
-                                                Padding="{TemplateBinding Padding}"
                                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                 AutomationProperties.AccessibilityView="Raw"
@@ -78,22 +42,7 @@
                                                             </Storyboard>
                                                         </VisualState>
                                                         <VisualState x:Name="PointerOver" />
-
-                                                        <VisualState x:Name="Pressed">
-                                                            <Storyboard>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ZToggleSwitchPressedBackground}" />
-                                                                </ObjectAnimationUsingKeyFrames>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}" />
-                                                                </ObjectAnimationUsingKeyFrames>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ZToggleSwitchKnobFillPressed}" />
-                                                                </ObjectAnimationUsingKeyFrames>
-                                                                <PointerDownThemeAnimation Storyboard.TargetName="ContentPresenter" />
-                                                            </Storyboard>
-                                                        </VisualState>
-
+                                                        <VisualState x:Name="Pressed" />
                                                         <VisualState x:Name="Disabled" />
                                                     </VisualStateGroup>
                                                 </VisualStateManager.VisualStateGroups>
@@ -102,118 +51,100 @@
                                     </Setter.Value>
                                 </Setter>
                             </Style>
-
                         </Grid.Resources>
 
                         <TextBlock
                             x:Name="Header"
-                            MinWidth="100"
-                            Margin="5"
                             FontFamily="{TemplateBinding FontFamily}"
                             FontSize="{TemplateBinding HeaderFontSize}"
-                            FontWeight="SemiBold"
-                            Foreground="{TemplateBinding HeaderForeground}"
-                            Text="{TemplateBinding HeaderText}"
+                            Foreground="{TemplateBinding Foreground}"
+                            Text="{TemplateBinding Header}"
                             TextTrimming="CharacterEllipsis" />
 
                         <StackPanel Grid.Row="1" Orientation="Horizontal">
                             <Button
-                                x:Name="Button"
+                                x:Name="RootButton"
                                 Width="40"
                                 Height="20"
-                                Margin="5"
+                                Margin="0,8,8,8"
                                 Padding="0"
                                 HorizontalContentAlignment="Left"
                                 BorderThickness="0"
                                 CornerRadius="10"
                                 Style="{StaticResource ButtonStyle}">
                                 <Button.Content>
-
                                     <Grid Margin="3,2">
-
-
                                         <ProgressRing
                                             x:Name="ProgressRing"
                                             MinWidth="10"
                                             MinHeight="10"
                                             Background="Transparent"
                                             IsActive="False" />
-
                                         <Ellipse
                                             x:Name="Knob"
                                             Width="10"
                                             Height="10"
-                                            Fill="White"
                                             Visibility="Visible" />
-
                                     </Grid>
                                 </Button.Content>
-
                             </Button>
                             <TextBlock
                                 x:Name="OnOffText"
-                                MinWidth="70"
-                                Margin="5"
+                                MinWidth="60"
+                                Margin="0,8,8,8"
                                 VerticalAlignment="Center"
                                 FontFamily="{TemplateBinding FontFamily}"
                                 FontSize="{TemplateBinding OnOffFontSize}"
-                                Foreground="{TemplateBinding OnOffForeground}"
-                                Text="{TemplateBinding OnOffContent}"
+                                Foreground="{TemplateBinding Foreground}"
                                 TextTrimming="CharacterEllipsis" />
                         </StackPanel>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="ButtonStates">
-
                                 <VisualState x:Name="NormalButtonState" />
 
                                 <VisualState x:Name="OnState">
                                     <VisualState.Setters>
-                                        <Setter Target="Button.HorizontalContentAlignment" Value="Right" />
-                                        <Setter Target="Knob.Fill" Value="White" />
-
-                                        <Setter Target="ProgressRing.Foreground" Value="White" />
+                                        <Setter Target="RootButton.HorizontalContentAlignment" Value="Right" />
+                                        <Setter Target="Knob.Fill" Value="{ThemeResource ToggleSwitchKnobFillOn}" />
+                                        <Setter Target="ProgressRing.Foreground" Value="{ThemeResource ToggleSwitchKnobFillOn}" />
                                     </VisualState.Setters>
-
                                 </VisualState>
 
                                 <VisualState x:Name="OffState">
                                     <VisualState.Setters>
-                                        <Setter Target="Button.HorizontalContentAlignment" Value="Left" />
-                                        <Setter Target="Knob.Fill" Value="Black" />
-                                        <Setter Target="ProgressRing.Foreground" Value="Black" />
-                                        <Setter Target="Button.BorderBrush" Value="Black" />
-                                        <Setter Target="Button.BorderThickness" Value="2" />
-                                        <Setter Target="Button.Background" Value="White" />
+                                        <Setter Target="RootButton.HorizontalContentAlignment" Value="Left" />
+                                        <Setter Target="Knob.Fill" Value="{ThemeResource ToggleSwitchKnobFillOff}" />
+                                        <Setter Target="ProgressRing.Foreground" Value="{ThemeResource ToggleSwitchKnobFillOff}" />
+                                        <Setter Target="RootButton.BorderBrush" Value="{ThemeResource ToggleSwitchKnobFillOff}" />
+                                        <Setter Target="RootButton.BorderThickness" Value="2" />
+                                        <Setter Target="RootButton.Background" Value="{ThemeResource ToggleSwitchContainerBackgroundPressed}" />
                                     </VisualState.Setters>
                                 </VisualState>
 
                                 <VisualState x:Name="OnPointerPressed">
                                     <VisualState.Setters>
-                                        <Setter Target="Button.Background" Value="Gray" />
-                                        <Setter Target="Knob.Fill" Value="White" />
-                                        <Setter Target="Button.HorizontalContentAlignment" Value="Right" />
+                                        <Setter Target="RootButton.Background" Value="{ThemeResource ToggleSwitchFillOnPressed}" />
+                                        <Setter Target="Knob.Fill" Value="{ThemeResource ToggleSwitchKnobFillOnPressed}" />
+                                        <Setter Target="RootButton.HorizontalContentAlignment" Value="Right" />
                                     </VisualState.Setters>
                                 </VisualState>
+
                                 <VisualState x:Name="OffPointerPressed">
                                     <VisualState.Setters>
-                                        <Setter Target="Button.Background" Value="Gray" />
-                                        <Setter Target="Knob.Fill" Value="White" />
-                                        <Setter Target="Button.HorizontalContentAlignment" Value="Left" />
+                                        <Setter Target="RootButton.Background" Value="{ThemeResource ToggleSwitchFillOffPressed}" />
+                                        <Setter Target="Knob.Fill" Value="{ThemeResource ToggleSwitchKnobFillOffPressed}" />
+                                        <Setter Target="RootButton.HorizontalContentAlignment" Value="Left" />
                                     </VisualState.Setters>
                                 </VisualState>
-
-
                             </VisualStateGroup>
 
                             <VisualStateGroup x:Name="ProgressRingStates">
-
                                 <VisualState x:Name="NormalProgressRingState" />
-
                                 <VisualState x:Name="Loading">
                                     <VisualState.Setters>
                                         <Setter Target="ProgressRing.IsActive" Value="True" />
-                                        <Setter Target="Button.IsEnabled" Value="False" />
+                                        <Setter Target="RootButton.IsEnabled" Value="False" />
                                         <Setter Target="Knob.Visibility" Value="Collapsed" />
                                     </VisualState.Setters>
                                 </VisualState>
@@ -221,24 +152,13 @@
                                 <VisualState x:Name="Loaded">
                                     <VisualState.Setters>
                                         <Setter Target="ProgressRing.IsActive" Value="False" />
-                                        <Setter Target="Button.IsEnabled" Value="True" />
+                                        <Setter Target="RootButton.IsEnabled" Value="True" />
                                         <Setter Target="Knob.Visibility" Value="Visible" />
-
                                     </VisualState.Setters>
                                 </VisualState>
-
-                                <!--<VisualState x:Name="PointerPressed">
-                                    <VisualState.Setters>
-                                        <Setter Target="Button.Background" Value="Gray" />
-                                        <Setter Target="Knob.Fill" Value="White" />
-                                    </VisualState.Setters>
-                                </VisualState>-->
-
                             </VisualStateGroup>
-
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

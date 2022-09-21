@@ -77,9 +77,5 @@ namespace SampleControlsApp
             Status.Background = new SolidColorBrush(Colors.Green);
         }
 
-        private void Status_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-
-        }
     }
 }
