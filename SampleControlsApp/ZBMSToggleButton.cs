@@ -385,6 +385,7 @@ namespace SampleControlsApp
         private void PointerReleasedFunction(object sender, RoutedEventArgs e)
         {
           //  VisualStateManager.GoToState(this, "PointerReleased", false);
+          // demo comment
         }
 
 
