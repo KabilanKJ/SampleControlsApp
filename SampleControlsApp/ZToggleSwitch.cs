@@ -17,141 +17,23 @@ namespace SampleControlsApp
     public sealed class ZToggleSwitch : Control
     {
         private Button _rootButton;
-        private TextBlock _onOff;
-        private TextBlock _header;
+        private TextBlock _onOffText;
+        private TextBlock _headerText;
         private SolidColorBrush _colorBrush;
 
         public event EventHandler<RoutedEventArgs> Toggled;
-        public event EventHandler<RoutedEventArgs> OnClick;
+        public event EventHandler<RoutedEventArgs> Click;
 
         public ZToggleSwitch()
         {
             this.DefaultStyleKey = typeof(ZToggleSwitch);
         }
-       
-        public double OnOffFontSize
-        {
-            get { return (double)GetValue(OnOffFontSizeProperty); }
-            set { SetValue(OnOffFontSizeProperty, value); }
-        }
 
-        public static readonly DependencyProperty OnOffFontSizeProperty =
-            DependencyProperty.Register(nameof(OnOffFontSize), typeof(double), typeof(ZToggleSwitch), new PropertyMetadata(12));
-
-
-        public double HeaderFontSize
-        {
-            get { return (double)GetValue(HeaderFontSizeProperty); }
-            set { SetValue(HeaderFontSizeProperty, value); }
-        }
-
-        public static readonly DependencyProperty HeaderFontSizeProperty =
-            DependencyProperty.Register(nameof(HeaderFontSize), typeof(double), typeof(ZToggleSwitch), new PropertyMetadata(12));
-
-        public bool IsLoadingEnabled
-        {
-            get { return (bool)GetValue(IsLoadingEnabledProperty); }
-            set { SetValue(IsLoadingEnabledProperty, value); }
-        }
-
-        public static readonly DependencyProperty IsLoadingEnabledProperty =
-            DependencyProperty.Register(nameof(IsLoadingEnabled), typeof(bool), typeof(ZToggleSwitch), new PropertyMetadata(true, new PropertyChangedCallback(OnLoadingEnabledCallBack)));
-
-        public static void OnLoadingEnabledCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        {
-            var toggleSwitch = sender as ZToggleSwitch;
-            toggleSwitch.UpdateLoadingState();
-        }
-
-        private void UpdateLoadingState()
-        {
-            if (!IsLoadingEnabled)
-            {
-                VisualStateManager.GoToState(this, "Loaded", false);
-                if (_onOff != null)
-                {
-                    _onOff.Text = IsOn ? OnContent : OffContent;
-                }
-
-            }
-        }
-
-        public string LoadingContent
-        {
-            get { return (string)GetValue(LoadingContentProperty); }
-            set
-            {
-                if (value == null)
-                {
-                    SetValue(LoadingContentProperty, "Loading");
-                }
-                else
-                {
-                    SetValue(LoadingContentProperty, value);
-                }
-                UpdateOnOffText(LoadingContent);
-            }
-        }
-
-        public static readonly DependencyProperty LoadingContentProperty =
-            DependencyProperty.Register(nameof(LoadingContent), typeof(string), typeof(ZToggleSwitch), new PropertyMetadata("Loading"));
-
-        public string OnContent
-        {
-            get { return (string)GetValue(OnContentProperty); }
-            set
-            {
-                if (value == null)
-                {
-                    SetValue(OnContentProperty, "On");
-                }
-                else
-                {
-                    SetValue(OnContentProperty, value);
-                }
-                UpdateOnOffText(OnContent);
-            }
-        }
-
-        public static readonly DependencyProperty OnContentProperty =
-            DependencyProperty.Register(nameof(OnContent), typeof(string), typeof(ZToggleSwitch), new PropertyMetadata("On"));
-
-        public string OffContent
-        {
-            get { return (string)GetValue(OffContentProperty); }
-            set
-            {
-                if (value == null)
-                {
-                    SetValue(OffContentProperty, "Off");
-                }
-                else
-                {
-                    SetValue(OffContentProperty, value);
-                   
-                }
-                UpdateOnOffText(OffContent);
-            }
-        }
-
-        public static readonly DependencyProperty OffContentProperty =
-            DependencyProperty.Register(nameof(LoadingContent), typeof(string), typeof(ZToggleSwitch), new PropertyMetadata("Off"));
-
-        public SolidColorBrush OnStateBackground
-        {
-            get { return (SolidColorBrush)GetValue(OnStateBackgroundProperty); }
-            set
-            {
-
-                SetValue(OnStateBackgroundProperty, value);
-                UpdateButtonBackground();
-            }
-        }
 
         public static readonly DependencyProperty OnStateBackgroundProperty =
-            DependencyProperty.Register(nameof(OnStateBackground), typeof(SolidColorBrush), typeof(ZToggleSwitch), new PropertyMetadata(new SolidColorBrush(Colors.Blue), OnOnStateBackGroundChangedCallBack));
+            DependencyProperty.Register(nameof(OnStateBackground), typeof(SolidColorBrush), typeof(ZToggleSwitch), new PropertyMetadata(null, OnStateBackgroundChanged));
 
-        public static void OnOnStateBackGroundChangedCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        public static void OnStateBackgroundChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             var toggleSwitch = sender as ZToggleSwitch;
             toggleSwitch.UpdateButtonBackground();
@@ -186,18 +68,88 @@ namespace SampleControlsApp
 
         public void ModifyHeaderVisibility()
         {
-            if (_header != null)
+            if (_headerText != null)
             {
                 if (Header == null)
                 {
-                    _header.Visibility = Visibility.Collapsed;
+                    _headerText.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
-                    _header.Visibility = Visibility.Visible;
+                    _headerText.Visibility = Visibility.Visible;
                 }
             }
         }
+       
+        public string LoadingContent
+        {
+            get { return (string)GetValue(LoadingContentProperty); }
+            set { SetValue(LoadingContentProperty, value); }       
+        }
+
+        public static readonly DependencyProperty LoadingContentProperty =
+            DependencyProperty.Register(nameof(LoadingContent), typeof(string), typeof(ZToggleSwitch), new PropertyMetadata("Loading", ContentChanged));
+
+        public string OnContent
+        {
+            get { return (string)GetValue(OnContentProperty); }
+            set { SetValue(OnContentProperty, value);   }
+        }
+
+        public static readonly DependencyProperty OnContentProperty =
+            DependencyProperty.Register(nameof(OnContent), typeof(string), typeof(ZToggleSwitch), new PropertyMetadata("On", ContentChanged));
+
+        public string OffContent
+        {
+            get { return (string)GetValue(OffContentProperty); }
+            set { SetValue(OffContentProperty, value);}
+        }
+
+        public static readonly DependencyProperty OffContentProperty =
+            DependencyProperty.Register(nameof(OffContent), typeof(string), typeof(ZToggleSwitch), new PropertyMetadata("Off", ContentChanged));
+
+       
+        public SolidColorBrush OnStateBackground
+        {
+            get { return (SolidColorBrush)GetValue(OnStateBackgroundProperty); }
+            set
+            {
+                SetValue(OnStateBackgroundProperty, value);
+                UpdateButtonBackground();
+            }
+        }
+
+        public static void ContentChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            var toggleSwitch = sender as ZToggleSwitch;
+            toggleSwitch.UpdateOnOffText();
+        }
+
+
+        public bool IsLoadingEnabled
+        {
+            get { return (bool)GetValue(IsLoadingEnabledProperty); }
+            set { SetValue(IsLoadingEnabledProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsLoadingEnabledProperty =
+            DependencyProperty.Register(nameof(IsLoadingEnabled), typeof(bool), typeof(ZToggleSwitch), new PropertyMetadata(false, new PropertyChangedCallback(OnLoadingEnabledCallBack)));
+
+        public static void OnLoadingEnabledCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            var toggleSwitch = sender as ZToggleSwitch;
+            toggleSwitch.UpdateLoadingState();
+        }
+
+        private void UpdateLoadingState()
+        {
+            if (!IsLoadingEnabled)
+            {
+                VisualStateManager.GoToState(this, "Loaded", false);
+                UpdateOnOffText();
+            }
+        }
+
 
         public bool IsLoading
         {
@@ -206,9 +158,9 @@ namespace SampleControlsApp
         }
 
         public static readonly DependencyProperty IsLoadingProperty =
-            DependencyProperty.Register(nameof(IsLoading), typeof(bool), typeof(ZToggleSwitch), new PropertyMetadata(true, new PropertyChangedCallback(OnLoadingChangedCallBack)));
+            DependencyProperty.Register(nameof(IsLoading), typeof(bool), typeof(ZToggleSwitch), new PropertyMetadata(true, new PropertyChangedCallback(OnLoadingChanged)));
 
-        public static void OnLoadingChangedCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        public static void OnLoadingChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             var toggleSwitch = sender as ZToggleSwitch;
             toggleSwitch.ModifyLoadingState();
@@ -221,19 +173,17 @@ namespace SampleControlsApp
                 if (IsLoading)
                 {
                     VisualStateManager.GoToState(this, "Loading", false);
-                    UpdateOnOffText(LoadingContent);
                 }
                 else
                 {
                     VisualStateManager.GoToState(this, "Loaded", false);
-                    UpdateOnOffText(IsOn ? OnContent : OffContent);
                 }
             }
             else
             {
                 VisualStateManager.GoToState(this, "Loaded", false);
-                UpdateOnOffText(IsOn ? OnContent : OffContent);
             }
+            UpdateOnOffText();
         }
 
         public bool IsOn
@@ -256,26 +206,20 @@ namespace SampleControlsApp
             if (IsOn)
             {
                 VisualStateManager.GoToState(this, "OnState", false);
-                UpdateOnOffText(OnContent);
                 UpdateButtonBackground();
             }
             else
             {
                 VisualStateManager.GoToState(this, "OffState", false);
-                UpdateOnOffText(OffContent);
             }
 
             if (IsLoadingEnabled)
             {
                 IsLoading = true;
             }
-        }
-
-        private void UpdateOnOffText(string value)
-        {
-            if (_onOff != null)
+            else
             {
-                _onOff.Text = value;
+                UpdateOnOffText();
             }
         }
 
@@ -287,51 +231,50 @@ namespace SampleControlsApp
                 throw new ArgumentNullException("No child (Button) found");
             }
 
-            _onOff = GetChildTemplate<TextBlock>("OnOffText");
-            if (_onOff == null)
+            _onOffText = GetChildTemplate<TextBlock>("OnOffText");
+            if (_onOffText == null)
             {
                 throw new ArgumentNullException("No child (TextBlock) found");
             }
 
-            _header = GetChildTemplate<TextBlock>("Header");
-            if (_header == null)
+            _headerText = GetChildTemplate<TextBlock>("Header");
+            if (_headerText == null)
             {
                 throw new ArgumentNullException("No child (TextBlock) found");
             }
 
             _rootButton.Click += (s, eventargs) => Toggled?.Invoke(s, eventargs);
-            _rootButton.Click += (s, eventargs) => OnClick?.Invoke(s, eventargs);
+            _rootButton.Click += (s, eventargs) => Click?.Invoke(s, eventargs);
 
             _rootButton.Click += RootButton_Clicked;
-            _onOff.Tapped+= RootButton_Clicked; 
+            _onOffText.Tapped+= RootButton_Clicked; 
 
             _rootButton.AddHandler(UIElement.PointerPressedEvent, new PointerEventHandler(RootButton_PointerPressed), true);
 
             if (IsOn)
             {
                 VisualStateManager.GoToState(this, "OnState", false);
-                UpdateOnOffText(OnContent);
                 UpdateButtonBackground();
             }
             else
             {
                 VisualStateManager.GoToState(this, "OffState", false);
-                UpdateOnOffText(OffContent);
             }
 
             if (IsLoadingEnabled)
             {
                 IsLoading = false;
             }
+            else
+            {
+                UpdateOnOffText();
+
+            }
+            ModifyHeaderVisibility();
         }
 
-        private void RootButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            IsOn = !IsOn;
-        }
-       
         private T GetChildTemplate<T>(string childName) where T : DependencyObject =>
-            GetTemplateChild(childName) as T;
+           GetTemplateChild(childName) as T;
 
         private void RootButton_PointerPressed(object sender, RoutedEventArgs e)
         {
@@ -344,6 +287,53 @@ namespace SampleControlsApp
                 VisualStateManager.GoToState(this, "OffPointerPressed", false);
             }
         }
+
+        private void UpdateOnOffText()
+        {
+            if (IsLoadingEnabled)
+            {
+                if (IsLoading)
+                {
+                    UpdateOnOffText(LoadingContent);
+                }
+                else
+                {
+                    if (IsOn)
+                    {
+                        UpdateOnOffText(OnContent);
+                    }
+                    else
+                    {
+                        UpdateOnOffText(OffContent);
+                    }
+                }
+            }
+            else
+            {
+                if (IsOn)
+                {
+                    UpdateOnOffText(OnContent);
+                }
+                else
+                {
+                    UpdateOnOffText(OffContent);
+                }
+            }
+        }
+
+        private void UpdateOnOffText(string value)
+        {
+            if (_onOffText != null && value != null)
+            {
+                _onOffText.Text = value;
+            }
+        }
+
+        private void RootButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            IsOn = !IsOn;
+        }
+              
     }
 }
 

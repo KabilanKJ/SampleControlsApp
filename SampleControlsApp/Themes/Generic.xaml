@@ -56,7 +56,7 @@
                         <TextBlock
                             x:Name="Header"
                             FontFamily="{TemplateBinding FontFamily}"
-                            FontSize="{TemplateBinding HeaderFontSize}"
+                            FontSize="{TemplateBinding FontSize}"
                             Foreground="{TemplateBinding Foreground}"
                             Text="{TemplateBinding Header}"
                             TextTrimming="CharacterEllipsis" />
@@ -90,11 +90,10 @@
                             </Button>
                             <TextBlock
                                 x:Name="OnOffText"
-                                MinWidth="60"
                                 Margin="0,8,8,8"
                                 VerticalAlignment="Center"
                                 FontFamily="{TemplateBinding FontFamily}"
-                                FontSize="{TemplateBinding OnOffFontSize}"
+                                FontSize="{TemplateBinding FontSize}"
                                 Foreground="{TemplateBinding Foreground}"
                                 TextTrimming="CharacterEllipsis" />
                         </StackPanel>

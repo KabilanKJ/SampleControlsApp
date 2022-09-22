@@ -542,22 +542,17 @@
 
         <Grid
             Grid.Row="1"
+            Width="500"
             Margin="20"
-            Background="LightGray">
+            Background="Red">
 
             <local:ZToggleSwitch
                 x:Name="SampleButton"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Background="White"
-                HeaderFontSize="20"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="16"
                 IsLoadingEnabled="True"
                 IsOn="True"
-                LoadingContent="Waiting"
-                OffContent="Bored "
-                OnContent="Happy"
-                OnOffFontSize="16"
-                OnStateBackground="ForestGreen"
                 Toggled="SampleButton_Toggled" />
 
             <Button
